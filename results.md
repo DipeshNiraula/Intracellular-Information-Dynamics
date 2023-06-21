@@ -1,0 +1,11 @@
+![image](https://github.com/DipeshNiraula/Intracellular-Information-Dynamics/assets/53914349/f403a321-fb6e-4537-8b45-a4192105975c)
+![image](https://github.com/DipeshNiraula/Intracellular-Information-Dynamics/assets/53914349/13cc9f64-9853-404b-aa1a-341a5ec42e18)
+![image](https://github.com/DipeshNiraula/Intracellular-Information-Dynamics/assets/53914349/13e51fd1-0b41-4e53-9c3c-22de9d19b2f8)
+![image](https://github.com/DipeshNiraula/Intracellular-Information-Dynamics/assets/53914349/b3a8926d-aa69-48a9-a512-99d8c925de8a)
+![image](https://github.com/DipeshNiraula/Intracellular-Information-Dynamics/assets/53914349/4d4c474f-d5d9-4f61-bbb5-5951f7d5094f)
+![image](https://github.com/DipeshNiraula/Intracellular-Information-Dynamics/assets/53914349/ef6b7168-6279-4147-9d1c-273f12cade41)
+![image](https://github.com/DipeshNiraula/Intracellular-Information-Dynamics/assets/53914349/59730b58-37e7-4761-babb-173437d68cda)
+![image](https://github.com/DipeshNiraula/Intracellular-Information-Dynamics/assets/53914349/d74969c9-9c45-491a-a88f-5abb4bc2ad92)
+![image](https://github.com/DipeshNiraula/Intracellular-Information-Dynamics/assets/53914349/e0f4c0ae-9ed6-47b9-ab12-14d766418163)
+![image](https://github.com/DipeshNiraula/Intracellular-Information-Dynamics/assets/53914349/0017d3ea-64d1-401c-bbe4-9b051de6967e)
+
