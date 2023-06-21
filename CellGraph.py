@@ -1,3 +1,4 @@
+ 
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
@@ -37,7 +38,8 @@ class CellGraph():
         
         Returns
         -------
-        cellgraph: zero 3D numpy array of size 2n-1 $\times$ 2n-1 $\times$ 2n-1            
+        cellgraph: 3D numpy array of size 2n-1 by 2n-1 by 2n-1  
+            Initial cellgraph is a zero numpy array          
         '''
         return np.zeros((2*self.no_grid-1, 2*self.no_grid-1, 2*self.no_grid-1))
     
@@ -47,13 +49,14 @@ class CellGraph():
         
         Returns
         -------
-        cell: zero 3D numpy array of size nxnxn            
+        cell: 3D numpy array of size n by n by n           
+            Initial cell is a zero numpy array   
         '''
         return np.zeros((self.no_grid, self.no_grid, self.no_grid))
     
     def initiate_conductance(self, mu=0.05, sigma=0.5):
         '''
-        Initiate conductance for a cellgraph following a lognormal distribution
+        Initiate log-normally distributed  cellgraph conductance
         
         Parameters
         ----------
@@ -64,20 +67,20 @@ class CellGraph():
 
         Returns
         -------
-        conductance map: 3D numpy array of size 2n-1x2n-1x2n-1  
-            DESCRIPTION.
+        conductance map: 3D numpy array of size 2n-1  by 2n-1 by 2n-1  
+           log-normally distributed conductance for a cellgraph
 
         '''
         return np.random.lognormal(mu, sigma, (2*self.no_grid-1, 2*self.no_grid-1, 2*self.no_grid-1))
     
     def vertex_index(self):
         ''' 
-        Return arrays representing the vertex indices of a cellgraph grid.
+        Return grid indices of cellgraph vertices. Vertex live in even indices (2i,2j,2k).
         
         Returns
         -------
-        I_vertex, J_vertex, K_vertex : 3D numpy array of size nxnxn
-            I_vertex, J_vertex, K_vertex are arrays of n 2D arrays of size nxn that contains cellgraph grid indices in x, y, and z directions
+        I_vertex, J_vertex, K_vertex : 3D numpy array of size n by n by n
+            I_vertex, J_vertex, and K_vertex are cell grid indices in x, y, and z directions
 
         '''
         I_vertex, J_vertex, K_vertex = 2*np.indices((self.no_grid, self.no_grid, self.no_grid))
@@ -85,20 +88,20 @@ class CellGraph():
     
     def sphere_surface(self, X, Y, Z, radius):
         '''
-        Obtain cell structure and indices with a spherical surface representing cell organelles    
+        Return cell with spherical cell organelle surfaces and their indices.
 
         Parameters
         ----------
-        X, Y, Z : 3D numpy array of size nxnxn
-            X, Y, and Z are arrays of n 2D arrays  of size nxn that contains cell grid co-ordinates in x, y, and z directions
+        X, Y, Z : 3D numpy array of size n by n by n
+            X, Y, and Z are cell grid co-ordinates in x, y, and z directions
         radius : float
             radius of a spherical surface.
 
         Returns
         -------
-        sphere_surface_ : 3D numpy array of size nxnxn
-            A nxnxn cell masked with shperical surface as True and remaning voxels as False.
-        idx : 2D numpy aray of size rowx3 where row is the number of True voxels
+        sphere_surface_ : 3D numpy array of size n by n by n
+            A n by n by n cell masked with spherical surface voxel as True and remaining voxels as False.
+        idx : 2D numpy aray of size rows by 3 where rows is the number of True voxels
             Indices of spherical surface voxel in 2D.
 
         '''
@@ -112,19 +115,19 @@ class CellGraph():
     
     def cytoskeleton(self, X, Y, Z):
         '''
-        Obtain cell structure with randomly distributed cytoskeleton covering frac percentage of volume between r_pc and r_co. 
+        Return cell with frac percentage of randomly distributed cytoskeleton by volume in between r_pc and r_co. 
         
         Parameters
         ----------
-        X, Y, Z : 3D numpy array of size nxnxn
-            X, Y, and Z are arrays of n 2D arrays  of size nxn that contains cell grid co-ordinates in x, y, and z directions
+        X, Y, Z : 3D numpy array of size n by n by n
+            X, Y, and Z are cell grid co-ordinates in x, y, and z directions
 
 
         Returns
         -------
-        cs : 3D numpy array of size nxnxn
-            A nxnxn cell masked with randomly chosen voxels as True and remaining voxels as False.
-        idx : 2D numpy array of size rowx3 where row is the number of True voxels
+        cs : 3D numpy array of size n by n by n
+            A n by n by n cell masked with randomly chosen voxels as True and remaining voxels as False.
+        idx : 2D numpy array of size rows by 3 where rows is the number of True voxels
             Indices of cytoskeleton voxel in 2D.
 
         '''
@@ -150,12 +153,12 @@ class CellGraph():
         
         Parameters
         ----------
-        co_ordinates: 2D array of size rowx3
+        co_ordinates: 2D array of size rows by 3
             {(x,y,z)}
 
         Returns
         -------
-        index : 2D array of size rowx3
+        index : 2D array of size rows by 3
             index transform of coordinates
     
         '''
@@ -175,11 +178,11 @@ class CellGraph():
         
         Parameters
         ----------
-        index: 2D Array of size rowx3
+        index: 2D Array of size rows by 3
             {(i,j,k)}
         Returns
         -------
-        co_ordiante : 2D array of size rowx3
+        co_ordinate : 2D array of size rows by 3
             co-ordinate transform of grid index
     
         '''
@@ -192,15 +195,15 @@ class CellGraph():
     
     def index_to_coordinate_grid(self, I, J, K):
         '''
-        Index grid to coordinate transformation
+        Index to coordinate grid transformation
         Parameters
         ----------
-        I, J, K: 3D Array of size nxnxn
-            I J and K are arrays of n 2D arrays of size nxn that contains grid indices in x, y, and z directions
+        I, J, K: 3D Array of size n by n by n
+            I J and K are arrays of n 2D arrays of size n by n that contains grid indices in x, y, and z directions
         Returns
         -------
-        X, Y, Z : 3D Array of size nxnxn
-            X, Y, and Z are arrays of n 2D arrays of size nxn that contains grid co-ordinates in x, y, and z directions
+        X, Y, Z : 3D Array of size n by  by n
+            X, Y, and Z are arrays of n 2D arrays of size n by n that contains grid co-ordinates in x, y, and z directions
     
         '''
         X = I* self.grid_size + self.index_origin_in_coordinate[0]
@@ -215,11 +218,11 @@ class CellGraph():
 
         Returns
         -------
-        cm_surface, pc_surface, co_surface : 3D numpy array of size nxnxn
-            A nxnxn cell masked with shperical surfaces representing cell membrane, peripheral cytoplasm, and central organelle as True and remaining voxels as False.
+        cm_surface, pc_surface, co_surface : 3D numpy array of size n by n by n
+            An n by n by n cell masked with spherical surfaces representing cell membrane, peripheral cytoplasm, and central organelle as True and remaining voxels as False.
         cs : 3D numpy array of size nxnxn.
-            A nxnxn cell masked with randomly chosen cytoskeleton voxels as True and remaining voxels as False.
-        cm_idx, pc_idx, co_idx, cs_idx : 2D numpy aray of size rowx3 where row is the number of True voxels
+            An n by n by n cell masked with randomly chosen cytoskeleton voxels as True and remaining voxels as False.
+        cm_idx, pc_idx, co_idx, cs_idx : 2D numpy aray of size rows by 3 where rows is the number of True voxels
             Index of organelles surface and random cytoskeleton voxels in 2D.
 
         '''
@@ -237,27 +240,27 @@ class CellGraph():
         
         Parameters
         ----------
-        vector : 2D array of size rowxn
+        vector : 2D array of size rows by n
             vector in 3D space
         Returns
         -------
-        vector_length: 1D array of size row
-            vector length calculated by einstein summation function
+        vector_length: 1D array of size rows
+            vector length calculated by einstein-summation function
 
         '''
         return np.sqrt(np.einsum('ij,ij->i', vector, vector))
 
     def potential(self, cell, vertices, source, charge=1):
         '''
-        Return potential map of a cell for a source charge distribution following 1/d law
+        Return cell potential map for a source charge distribution following 1/d law
         
         Parameters
         ----------
         cell : 3D numpy array of size nxnxn
-            A nxnxn cell masked with organelle voxels as True and remaining voxels as False.
-        vertices : 2D array of size rowx3
+            A n by n by n cell masked with organelle voxels as True and remaining voxels as False.
+        vertices : 2D array of size rows by 3
             Index of organelles surface and random cytoskeleton voxels in 2D.
-        source : array of size 1x3
+        source : array of size 1 by 3
             Co-ordinate of source charge
         charge : float, optional
             charge strength. The default is 1.
@@ -265,7 +268,7 @@ class CellGraph():
         Returns
         -------
         cell : 3D numpy array of size nxnxn
-            A nxnxn cell with potential value on voxels with cell organelles.
+            An n by n by n cell with potential value on voxels with cell organelles.
 
         '''
         co_ordinate = self.index_to_coordinate(vertices) 
@@ -284,17 +287,17 @@ class CellGraph():
         
         Parameters
         ----------
-        conductance : 2D array of size rowx1
+        conductance : 2D array of size rows by 1
             Conductance of edges that lies in between source potential and target potential.
-        source_pot : array of size 1x1
+        source_pot : array of size 1 by 1
             Potential value of the source voxel
-        target_pot : 2D array of size rowx1
+        target_pot : 2D array of size rows by 1
             Potential value of the target voxels
 
         Returns
         -------
-        current: 2D array of size rowx1
-            Current value of the edges that lies in between source potential and target potential.
+        current: 2D array of size rows by 1
+            Nearest neighbour edge current value in between source and target voxel.
 
         '''
         current =  conductance*(source_pot-target_pot)
@@ -307,7 +310,7 @@ class CellGraph():
         
         Parameters
         ----------
-        cellgraph : 3D numpy array of size 2n-1x2n-1x2n-1
+        cellgraph : 3D numpy array of size 2n-1 by 2n-1 by 2n-1
             cellgraph are masked with organelle vertices as True.
         source_idx : 1D numpy array of size 3
             index of the source voxel whose immediate nearest neighbour is to be found
@@ -316,8 +319,9 @@ class CellGraph():
 
         Returns
         -------
-        NN_idx : 2D array of size rowx3
-            Vertex index of the nearest neighbours of the source. Only returns the nearest neighbours that has been occupied by a voxel.
+        NN_idx : 2D array of size rows by 3
+            Vertex index of the nearest neighbours of the source. 
+            Only returns the nearest neighbours that has been occupied by a voxel.
 
         '''
         #check for endcase
@@ -340,18 +344,18 @@ class CellGraph():
     
     def get_central_organelle_current(self, current_map, co_idx):
         '''
-        Returns current value at the surface of the central organelle
+        Returns surface current map of central organelle
         
         Parameters
         ----------
-        current_map : 3D numpy array of size nxnxn
+        current_map : 3D numpy array of size n by n by n
             current map of cell at time t
-        co_idx : 2D array of size rowx3
+        co_idx : 2D array of size rows by 3
             cell index for central organelle surface
         
         Returns
         -------
-        co_surface_current_map: 3D numpy array of size nxnxn
+        co_surface_current_map: 3D numpy array of size n by n by n
             current map of central organelle surface at a given time t
 
         '''
@@ -362,27 +366,27 @@ class CellGraph():
             
     def forward(self, cellgraph, conductance, current_map, signal_idx):
         '''
+        Returns one forward step of information flow
         
         Parameters
         ----------
-        cellgraph : 3D numpy array of size 2n-1x2n-1x2n-1 
+        cellgraph : 3D numpy array of size 2n-1 by 2n- by 2n-1 
             The vertex of cellgraph contains the potential map and the edges contains the edge current at time t
-        conductance : 3D numpy array of size 2n-1x2n-1x2n-1
+        conductance : 3D numpy array of size 2n-1 by 2n-1 by 2n-1
             Randomly generated conductance values for edges 
-        current_map : 3D numpy array of size nxnxn
+        current_map : 3D numpy array of size n by n by n
             current map of cell at time t
-        signal_idx : 2D array of size rowx3
+        signal_idx : 2D array of size rows by 3
             index of vertices that has received signal at time t 
 
         Returns
         -------
-        signaled_vertex : 2D array of size rowx3
+        signaled_vertex : 2D array of size rows by 3
             index of vertices that has received signal at time t+1 
-        cellgraph : 3D numpy array of size 2n-1x2n-1x2n-1 
+        cellgraph : 3D numpy array of size 2n-1 by 2n- by 2n-1 
             The vertex of cellgraph contains the potential map and the edges contains the edge current at time t+1
-        current_map : 3D numpy array of size nxnxn
+        current_map : 3D numpy array of size n by n by n
             current map of cell at time t+1
-
         '''
         # initialization of signaled vertex with np.array((-100,-100,-100)), will be removed at the end
         signaled_vertex = np.array((-100,-100,-100))
@@ -536,11 +540,11 @@ if __name__ == "__main__":
     TOTAL_TIME_STEP = 40
     FIG_COL = 5
     import math
-    fig_row = math.ceil(TOTAL_TIME_STEP/FIG_COL)
-    fig, axes = plt.subplots(fig_row, FIG_COL, figsize=(15, 24), dpi=150)
+    fig_rows = math.ceil(TOTAL_TIME_STEP/FIG_COL)
+    fig, axes = plt.subplots(fig_rows, FIG_COL, figsize=(15, 24), dpi=150)
     
     #sub-figure counter
-    ROW = 0
+    rows = 0
     COL = 0
     
     for signal_time in range(TOTAL_TIME_STEP):
@@ -551,14 +555,14 @@ if __name__ == "__main__":
             #store signaled vertex
             signal_time_tracker.append(signaled_idx)
             #subplots
-            im = axes[ROW][COL].imshow(current_map[int(current_map.shape[0]/2),:,:], norm = colors.LogNorm(vmin=1E-5, vmax=50))
+            im = axes[rows][COL].imshow(current_map[int(current_map.shape[0]/2),:,:], norm = colors.LogNorm(vmin=1E-5, vmax=50))
             im.set_cmap('nipy_spectral')
-            axes[ROW][COL].set_title('t = {}'.format(signal_time+1), fontsize=25)   
-            axes[ROW][COL].tick_params(labelsize=30)
-            axes[ROW][COL].set_xticks([]) #tick_params(labelsize=15)
-            axes[ROW][COL].set_yticks([])
+            axes[rows][COL].set_title('t = {}'.format(signal_time+1), fontsize=25)   
+            axes[rows][COL].tick_params(labelsize=30)
+            axes[rows][COL].set_xticks([]) #tick_params(labelsize=15)
+            axes[rows][COL].set_yticks([])
             if COL == FIG_COL-1:
-                ROW+=1
+                rows+=1
                 COL=0
             else:
                 COL += 1
