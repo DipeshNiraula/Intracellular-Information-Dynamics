@@ -9,7 +9,7 @@ class CellGraph():
     def __init__(self,
                  grid_size = 0.5,#[um]
                  r_cell_membrane = 10.0,#[um]
-                 r_peripherial_cytoplasm = 9.0,#[um]
+                 r_peripheral_cytoplasm = 9.0,#[um]
                  r_central_organelle = 2.5,#[um]
                  cs_frac = 0.2,
                  empty_shape = (1,3),
@@ -20,7 +20,7 @@ class CellGraph():
         self.no_grid = int(((2*r_cell_membrane)/grid_size)+1)
         
         self.r_cm = r_cell_membrane
-        self.r_pc = r_peripherial_cytoplasm
+        self.r_pc = r_peripheral_cytoplasm
         self.r_co = r_central_organelle 
         self.cs_frac = cs_frac        
         
@@ -37,13 +37,13 @@ class CellGraph():
         
         Returns
         -------
-        cellgraph: zero 3D numpy array of size 2n-1x2n-1x2n-1            
+        cellgraph: zero 3D numpy array of size 2n-1 $\times$ 2n-1 $\times$ 2n-1            
         '''
         return np.zeros((2*self.no_grid-1, 2*self.no_grid-1, 2*self.no_grid-1))
     
     def empty_Cell(self):
         '''  
-        Initialize cell for vertex propoerties such as potential and current signal
+        Initialize cell for vertex properties such as potential and current signal
         
         Returns
         -------
@@ -51,9 +51,9 @@ class CellGraph():
         '''
         return np.zeros((self.no_grid, self.no_grid, self.no_grid))
     
-    def initate_conductance(self, mu=0.05, sigma=0.5):
+    def initiate_conductance(self, mu=0.05, sigma=0.5):
         '''
-        Initiate conductance for a cellgraph followung a lognormal distribution
+        Initiate conductance for a cellgraph following a lognormal distribution
         
         Parameters
         ----------
@@ -85,7 +85,7 @@ class CellGraph():
     
     def sphere_surface(self, X, Y, Z, radius):
         '''
-        Obtain cell structure and indices with a shpherical surface representing cell organelles    
+        Obtain cell structure and indices with a spherical surface representing cell organelles    
 
         Parameters
         ----------
@@ -97,7 +97,7 @@ class CellGraph():
         Returns
         -------
         sphere_surface_ : 3D numpy array of size nxnxn
-            A nxnxn cellm masked with shperical surface as True and remaning voxels as False.
+            A nxnxn cell masked with shperical surface as True and remaning voxels as False.
         idx : 2D numpy aray of size rowx3 where row is the number of True voxels
             Indices of spherical surface voxel in 2D.
 
@@ -112,7 +112,7 @@ class CellGraph():
     
     def cytoskeleton(self, X, Y, Z):
         '''
-        Obtain cell structure with randomly distributed cytoskeleton covering frac percentatge of volume between r_pc and r_co. 
+        Obtain cell structure with randomly distributed cytoskeleton covering frac percentage of volume between r_pc and r_co. 
         
         Parameters
         ----------
@@ -123,8 +123,8 @@ class CellGraph():
         Returns
         -------
         cs : 3D numpy array of size nxnxn
-            A nxnxn cell masked with randomly choosen voxels as True and remaning voxels as False.
-        idx : 2D numpy aray of size rowx3 where row is the number of True voxels
+            A nxnxn cell masked with randomly chosen voxels as True and remaining voxels as False.
+        idx : 2D numpy array of size rowx3 where row is the number of True voxels
             Indices of cytoskeleton voxel in 2D.
 
         '''
@@ -192,7 +192,7 @@ class CellGraph():
     
     def index_to_coordinate_grid(self, I, J, K):
         '''
-        Index grid to coordinate transforamtion
+        Index grid to coordinate transformation
         Parameters
         ----------
         I, J, K: 3D Array of size nxnxn
@@ -216,9 +216,9 @@ class CellGraph():
         Returns
         -------
         cm_surface, pc_surface, co_surface : 3D numpy array of size nxnxn
-            A nxnxn cell masked with shperical surfaces representing cell membrame, pheripheral cytoplasm, and central organeelle as True and remaning voxels as False.
+            A nxnxn cell masked with shperical surfaces representing cell membrane, peripheral cytoplasm, and central organelle as True and remaining voxels as False.
         cs : 3D numpy array of size nxnxn.
-            A nxnxn cell masked with randomly choosen cytoskeleton voxels as True and remaning voxels as False.
+            A nxnxn cell masked with randomly chosen cytoskeleton voxels as True and remaining voxels as False.
         cm_idx, pc_idx, co_idx, cs_idx : 2D numpy aray of size rowx3 where row is the number of True voxels
             Index of organelles surface and random cytoskeleton voxels in 2D.
 
@@ -254,7 +254,7 @@ class CellGraph():
         Parameters
         ----------
         cell : 3D numpy array of size nxnxn
-            A nxnxn cell masked with organeelle voxels as True and remaning voxels as False.
+            A nxnxn cell masked with organelle voxels as True and remaining voxels as False.
         vertices : 2D array of size rowx3
             Index of organelles surface and random cytoskeleton voxels in 2D.
         source : array of size 1x3
@@ -269,7 +269,6 @@ class CellGraph():
 
         '''
         co_ordinate = self.index_to_coordinate(vertices) 
-        #print('co_ordiante: ', co_ordinate)
         distance = self.vector_length(co_ordinate - source)
         potential = np.divide(charge, distance)
         cell[vertices[:,0], vertices[:,1], vertices[:,2]] = potential
@@ -281,12 +280,12 @@ class CellGraph():
     
     def ohms_law(self, conductance, source_pot, target_pot):
         '''
-        Return edge current value I=GdV. Current can only flow from higher potenital to lower potential.
+        Return edge current value I=GdV. Current can only flow from higher potential to lower potential.
         
         Parameters
         ----------
         conductance : 2D array of size rowx1
-            Condutance of edges that lies in between source potential and target potential.
+            Conductance of edges that lies in between source potential and target potential.
         source_pot : array of size 1x1
             Potential value of the source voxel
         target_pot : 2D array of size rowx1
@@ -304,12 +303,12 @@ class CellGraph():
         
     def r_ball(self, cellgraph, source_idx, step=2):    
         '''
-        Return 1-voxel nearest neighbour of a vetex. In cellgraph step = 2 units.
+        Return 1-voxel nearest neighbour of a vertex. In cellgraph step = 2 units.
         
         Parameters
         ----------
         cellgraph : 3D numpy array of size 2n-1x2n-1x2n-1
-            cellgraph are masked with organeelle vertices as True.
+            cellgraph are masked with organelle vertices as True.
         source_idx : 1D numpy array of size 3
             index of the source voxel whose immediate nearest neighbour is to be found
         step : float, optional
@@ -369,16 +368,16 @@ class CellGraph():
         cellgraph : 3D numpy array of size 2n-1x2n-1x2n-1 
             The vertex of cellgraph contains the potential map and the edges contains the edge current at time t
         conductance : 3D numpy array of size 2n-1x2n-1x2n-1
-            Randomly generated coductance values for edges 
+            Randomly generated conductance values for edges 
         current_map : 3D numpy array of size nxnxn
             current map of cell at time t
         signal_idx : 2D array of size rowx3
-            index of vertices that has recieved signal at time t 
+            index of vertices that has received signal at time t 
 
         Returns
         -------
         signaled_vertex : 2D array of size rowx3
-            index of vertices that has recieved signal at time t+1 
+            index of vertices that has received signal at time t+1 
         cellgraph : 3D numpy array of size 2n-1x2n-1x2n-1 
             The vertex of cellgraph contains the potential map and the edges contains the edge current at time t+1
         current_map : 3D numpy array of size nxnxn
@@ -400,7 +399,7 @@ class CellGraph():
             #ohms law
             NN_edge_current = self.ohms_law(NN_conductance, source_pot, NN_target_pot)
 
-            #an edge can represent multiple conductances, in that case we simply replace edge currents value with new one
+            #an edge can represent multiple conductance, in that case we simply replace edge currents value with new one
             #although there is no need for storing edge_current           
             cellgraph[NN_edge_idx[:,0], NN_edge_idx[:,1], NN_edge_idx[:,2]] += NN_edge_current
             
@@ -475,7 +474,7 @@ def plot_cell_graph_minus_vertex_conductance_map(conductance_map, no_grid):
 
 
 if __name__ == "__main__": 
-    # initilization
+    # initialization
     cg = CellGraph()
     cellgraph = cg.empty_CellGraph_grid()        
     
@@ -502,9 +501,9 @@ if __name__ == "__main__":
     potential_map = cg.empty_Cell()
     # calculate potential map
     potential_map = cg.potential(potential_map, organelle_idx, input_signal)
-    # set the vetex with potential_map
+    # set the vertex with potential_map
     cellgraph[vertex_idx] = potential_map
-    conductance_map = cg.initate_conductance()
+    conductance_map = cg.initiate_conductance()
     
     
     # plot potential and conductance map
@@ -527,12 +526,12 @@ if __name__ == "__main__":
     
     
     # Information Dynamics 
-    # initalize current map
+    # initialize current map
     current_map = cg.empty_Cell()
     input_signal_idx = cg.coordinate_to_index(input_signal)    
     # vertex indices in cell graph is 2*voxel index of cell        
     signal_tracker_0 = 2*input_signal_idx
-    #initate signal tracker
+    #initiate signal tracker
     signal_time_tracker = [signal_tracker_0]
     TOTAL_TIME_STEP = 40
     FIG_COL = 5
@@ -540,7 +539,7 @@ if __name__ == "__main__":
     fig_row = math.ceil(TOTAL_TIME_STEP/FIG_COL)
     fig, axes = plt.subplots(fig_row, FIG_COL, figsize=(15, 24), dpi=150)
     
-    #subfigure counter
+    #sub-figure counter
     ROW = 0
     COL = 0
     
@@ -577,7 +576,7 @@ if __name__ == "__main__":
     plt.savefig('./plot/Information_Dynamics.svg')
     plt.savefig('./plot/Information_Dynamics.png')
     
-    #plot inforamtion flow at time =  TOTAL_TIME_STEP
+    #plot information flow at time =  TOTAL_TIME_STEP
     plot_2D(current_map[int(current_map.shape[0]/2),:,:], 
             title= 'Information Signal Map at 40 time steps', 
             log=True)
@@ -601,4 +600,3 @@ if __name__ == "__main__":
     h.set_axis_labels("Conductance", "Count", fontsize=20)
     h.fig.suptitle('LogNormal Conductance', fontsize=20)
     h.ax.tick_params(labelsize=20)
-    
