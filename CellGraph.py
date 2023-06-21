@@ -370,7 +370,7 @@ class CellGraph():
         Parameters
         ----------
         cellgraph : 3D numpy array of size 2n-1 by 2n- by 2n-1 
-            The vertex of cellgraph contains the potential map and the edges contains the edge current at time t
+            Cellgraph vertices contain the potential map and edges contain the edge-current at time t
         conductance : 3D numpy array of size 2n-1 by 2n-1 by 2n-1
             Randomly generated conductance values for edges 
         current_map : 3D numpy array of size n by n by n
@@ -383,7 +383,7 @@ class CellGraph():
         signaled_vertex : 2D array of size rows by 3
             index of vertices that has received signal at time t+1 
         cellgraph : 3D numpy array of size 2n-1 by 2n- by 2n-1 
-            The vertex of cellgraph contains the potential map and the edges contains the edge current at time t+1
+            Cellgraph vertices contain the potential map and edges contain the edge-current at time t+1
         current_map : 3D numpy array of size n by n by n
             current map of cell at time t+1
         '''
