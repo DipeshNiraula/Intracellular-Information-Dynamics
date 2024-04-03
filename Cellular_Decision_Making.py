@@ -249,10 +249,10 @@ def subplot(ax, title, X, y, y_pred, legend=False):
 
 def Decision_Maker(S_train, 
                    y_train, 
-                   L1_alpha=1E-6, 
-                   L2_alpha=1E-6, 
-                   learning_rate=1E-3, 
-                   epoch=1000):
+                   L1_alpha = 1E-6, 
+                   L2_alpha = 1E-6, 
+                   learning_rate = 1E-3, 
+                   epoch = 1000):
     '''
     Train 4 types of intracellular decision-makers via regression:
         Linear, Lasso, Ridge, and Artificial Neural Network (ANN)
@@ -468,7 +468,7 @@ def noise_analysis(source='point'):
     df = pd.DataFrame(rmse_dict)
     df.to_csv(f'./plot/Noise_Analysis_RMSE_{source}_source.csv')
 
-def plot_noise_analysis(source = "point"):
+def plot_noise_analysis(source="point"):
     '''
     Function to plot results from Noise Analysis
 
